@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar style=" --background: #031432;">
+    <ion-buttons  slot="start">
+      <ion-back-button color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons routerLink="/home" routerDirection="back">
+      <ion-title class="width">
+        <ion-text size="LARGE" color="warning">
+          K</ion-text>
+        <ion-text color="danger">
+          <ion-icon size="LARGE" name=cart></ion-icon>
+        </ion-text>
+        <ion-text color="light">TALOG</ion-text>
+      </ion-title>
+    </ion-buttons>
+    
+        
+  
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ 
+  <div class="container" style="padding-top: 50px;">
+        <ion-title class="ion-padding">
+            <ion-img style="width:100px;height: 100px; margin: auto;" src="../../assets/icon/katalog_round_icon.PNG"></ion-img>
+        </ion-title>
+        <ion-item>
+          <ion-icon slot="start" name="person"></ion-icon>
+          <ion-label position="floating">Email or number phone</ion-label>
+          <ion-input type="text" [(ngModel)]="dataUser.mail" ></ion-input>
+        </ion-item>
+     
+        <ion-item>
+          <ion-icon slot="start" name="lock-closed"></ion-icon>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input type="password" [(ngModel)]="dataUser.password"></ion-input>
+        </ion-item>
+        <section>
+          <ion-button expand="block" (click)="login(dataUser)">Connexion</ion-button>
+          <div class="forgot">
+          <ion-text>
+            <ion-label>Password forgot?</ion-label>
+          </ion-text>
+        </div>
+        </section>
+ 
+      <div id="signup">
+        <ion-label  color="primary" (click)="toSignUp()">I don't have account, signup for free</ion-label>
+    </div>
+</div>
+
+</ion-content>

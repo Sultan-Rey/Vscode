@@ -1,0 +1,26 @@
+.icon{
+    width: 20px;
+    height: 28px;
+    border: none;
+    padding:2px;
+  }
+  .width{
+    font-size: 26px;
+  }
+  section {
+    margin-top: 1em;
+    margin-bottom: 2.5em;
+  }
+  .error-message {
+    color: var(--ion-color-danger);
+}
+  section:not(.full-width),
+  .full-width > header {
+    padding: 0 10px;
+  }
+  .my-custom-class {
+    --background: #222;
+    --spinner-color: #fff;
+  
+    color: #fff;
+  }

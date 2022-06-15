@@ -1,0 +1,155 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons style="margin-top:5%;" slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title  class="width" mode=ios >
+      <ion-text size="LARGE" color="warning">
+        K</ion-text>
+        <ion-text color="danger"><ion-icon size="LARGE" name=cart></ion-icon></ion-text>
+        <ion-text >ta</ion-text><img title="Katalog icon" class="icon" src="assets/icon/lipstick.png"/><ion-text>og</ion-text>
+      </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+<form [formGroup]="registrationForm" (ngSubmit)="submit()">
+  <ion-item-group formGroupName="identification" >
+    <ion-item-divider style="background: rgb(41, 54, 75);">
+      <ion-icon name="person"></ion-icon>
+      <ion-label style="color: cornsilk; font-size: 16px;">Identification</ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-label position="stacked">Your name <span>*</span></ion-label>
+      <ion-input inputmode="text"  placeholder="Ex : Smith Anderson" required="true" formControlName="name"></ion-input>
+    </ion-item>
+    <div *ngFor="let error of errorMessages.name" style="padding-left: 5%">
+      <ng-container *ngIf="getName().hasError(error.type) && (getName().dirty || getName().touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+    <ion-item>
+      <ion-label position="stacked">Civilite</ion-label>
+      <ion-label position="fixed">Select your civil status?</ion-label>
+      <ion-select formControlName="civilite" [value]="civilite[0]">
+        <ion-select-option value="0">Select your civil status?</ion-select-option>
+        <ion-select-option *ngFor="let opts of civilite">{{opts}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label ion-button position="stacked">Birthday Date</ion-label>
+      <ion-datetime inputmode="date" placeholder="1994-03-14" formControlName="birthday" displayFormat="MM/DD/YYYY" min="1994-03-14"
+        max="2012-12-09"></ion-datetime>
+    </ion-item>
+  </ion-item-group>
+
+  <ion-item-group formGroupName="location">
+    <ion-item-divider style="background: rgb(41, 54, 75);">
+      <ion-icon name="location"></ion-icon>
+      <ion-label style="color: cornsilk; font-size: 16px;">Location</ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-label>Address Line 1<span>*</span></ion-label>
+      <ion-input formControlName="address1" placeholder="Street, Apt, Building number..."></ion-input>
+    </ion-item>
+    <div *ngFor="let error of errorMessages.address1" style="padding-left: 5%">
+      <ng-container *ngIf="getAddress1().hasError(error.type) && (getAddress1().dirty || getAddress1().touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+    <ion-item>
+      <ion-label>Address Line 2</ion-label>
+      <ion-input formControlName="address2" placeholder="Optional"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">City<span>*</span></ion-label>
+      <ion-input formControlName="city" placeholder="add a city name"></ion-input>
+    </ion-item>
+    <div *ngFor="let error of errorMessages.city" style="padding-left: 5%">
+      <ng-container *ngIf="getCity().hasError(error.type) && (getCity().dirty || getCity().touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+    <ion-item>
+      <ion-label position="fixed">State<span>*</span></ion-label>
+      <ion-input formControlName="state" placeholder="if you not in US add country name">
+      </ion-input>
+    </ion-item>
+    <div *ngFor="let error of errorMessages.state" style="padding-left: 5%">
+      <ng-container *ngIf="getState().hasError(error.type) && (getState().dirty || getState().touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+    <ion-item>
+      <ion-label position="fixed">Phone Number<span>*</span></ion-label>
+      <ion-input inputmode="tel" formControlName="phone" placeholder="+(area Code) number phone..."></ion-input>
+    </ion-item>
+    <div *ngFor="let error of errorMessages.phone" style="padding-left: 5%">
+      <ng-container *ngIf="getPhone().hasError(error.type) && (getPhone().dirty || getPhone().touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+    <ion-item>
+      <ion-label position="fixed">Zip Code<span>*</span></ion-label>
+      <ion-input formControlName="zipcode" placeholder="digits only..."></ion-input>
+    </ion-item>
+    <div *ngFor="let error of errorMessages.zipcode" style="padding-left: 5%">
+      <ng-container *ngIf="getZipcode().hasError(error.type) && (getZipcode().dirty || getZipcode().touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+  </ion-item-group>
+
+  <ion-item-group formGroupName="security">
+    <ion-item-divider style="background: rgb(41, 54, 75);">
+      <ion-icon name="key"></ion-icon>
+      <ion-label style="color: cornsilk; font-size: 16px;">Password & Security</ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-label position="fixed">E-mail<span>*</span></ion-label>
+      <ion-input formControlName="mail" placeholder="Enter your account mail.."></ion-input>
+    </ion-item>
+    <div *ngFor="let error of errorMessages.mail" style="padding-left: 5%">
+      <ng-container *ngIf="getMail().hasError(error.type) && (getMail().dirty || getMail().touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+    <ion-item>
+      <ion-label position="fixed">Password<span>*</span></ion-label>
+      <ion-input type="password" formControlName="password" placeholder="at least 8 characters with digits"></ion-input>
+    </ion-item>
+    <div *ngFor="let error of errorMessages.password" style="padding-left: 5%">
+      <ng-container *ngIf="getPassword().hasError(error.type) && (getPassword().dirty || getPassword().touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+    <ion-item>
+      <ion-label position="fixed">Confirm<span>*</span></ion-label>
+      <ion-input type="password" formControlName="confirm" placeholder="Re-type your password..."></ion-input>
+    </ion-item>
+  </ion-item-group>
+
+  <ion-item-group formGroupName="paymethod">
+    <ion-item-divider style="background: rgb(41, 54, 75);">
+      <ion-icon name="card"></ion-icon>
+      <ion-label style="color: cornsilk; font-size: 16px;">Terms And conditions</ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-checkbox  formControlName="agree"></ion-checkbox>
+      <ion-label style="margin-left:10px" color="tertiary">I'm agree with terms and conditions?</ion-label>
+    </ion-item>
+    
+    <ion-item>
+      <ion-icon name="document-text-outline"></ion-icon>
+      <ion-label  style="margin-right:10px; font-size: 10px;" color="tertiary">See Terms and Condition
+      </ion-label>
+    </ion-item>
+  </ion-item-group>
+  <section>
+    <ion-button button  expand="block" type="submit">SIGN UP FOR FREE</ion-button>
+  </section>
+  
+</form>
+
+</ion-content>

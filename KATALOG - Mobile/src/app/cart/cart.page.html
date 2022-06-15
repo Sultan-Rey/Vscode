@@ -1,0 +1,113 @@
+
+<app-page-header></app-page-header>
+
+<ion-content>
+  
+<ion-item class="mt-2" lines="none">
+  <ion-label>
+    <ion-buttons>
+      <ion-label style="font-weight: bold;">Total items cost : </ion-label>
+     <ion-text color="primary">
+      <h3  style="font-size:22px;">{{  getTotal()|currency}}</h3>
+     </ion-text>
+      
+    </ion-buttons>
+  </ion-label>
+  
+  <button class="btn btn-warning btn-md " (click)="checkout(cart)" >Check out</button>
+</ion-item>
+<div class="alert alert-dark"><h3><ion-icon name="cart" size="large"></ion-icon>Cart Items</h3>
+</div>
+<div class="container">
+  <ion-list>
+    
+    <ng-container *ngFor="let items of cart">
+
+      <ion-item ion-button detail="true" >
+        <ion-img size="large" (click)="goTo(items)" [src]="items.picture" style="width: 110px; height: 150px;"></ion-img>
+     <ion-item-group>
+       <ion-item >
+        <ion-label>
+          <div>
+            <ion-buttons>
+              <ion-text>{{items.price|currency}}</ion-text>
+              <ion-badge color="danger" *ngIf="checkQty(items)<10 && checkQty(items)>1">Only {{checkQty(items)}} left</ion-badge>
+            </ion-buttons>
+              <h6  (click)="goTo(items)">{{items.name}}</h6>
+            <ion-label><h6>{{items.description}}</h6></ion-label>
+            <ion-buttons>
+              <div class="qty-selector">
+                <ion-button  fill="clear" (click)="adjustqty('minus',items)">-</ion-button>
+                <ion-label>{{items.qty}}</ion-label>
+                <ion-button fill="clear" (click)="adjustqty('plus',items)">+</ion-button>
+              </div>
+            </ion-buttons>
+          </div>
+          </ion-label>
+       </ion-item>   
+     </ion-item-group>
+     <div class="row">
+      <button  class="mb-3 btn btn-primary btn-sm btn-block" (click)="savedForLater(items)">Save for later</button>
+      <button  class="btn btn-danger btn-sm btn-block"  (click)="remove(items)">Remove</button>
+    </div>
+    </ion-item>
+
+    </ng-container>
+   
+  </ion-list>
+</div>
+
+<div class="col-md-12 mt-3 border p-4">
+  <h4>Related to your recent Browsing Items</h4>
+  <ng-container *ngIf="browsing.length!==0 && isOnline">
+    <ion-slides style="margin-bottom:20px;" [options]="{ slidesPerView: '3', zoom: false, grabCursor: true }">
+      <ng-container *ngFor="let historic of browsing">
+        <ion-slide style="margin: 20px">
+          <ion-item-group>
+            <ion-img [src]="historic.models[0].pictures[0]" style="max-height: 300px; max-width: 300px"></ion-img>
+            <ion-row>
+              <ion-badge color="danger">
+                <h5>{{historic.caracteristic[0].price|currency}}</h5>
+              </ion-badge>
+            </ion-row>
+          </ion-item-group>
+        </ion-slide>
+      </ng-container>
+        </ion-slides>
+  </ng-container>
+  <div class="alert alert-default" *ngIf="browsing.length==0 && isOnline">
+    <ion-button class="border" expand="block" fill="clear">Browsing Historic empty, start shopping now!</ion-button>
+  </div>
+  <ion-chip color="danger" *ngIf="!isOnline">
+    <ion-icon size="large" name="alert-circle"></ion-icon>
+    <h4>No internet connection</h4>
+  </ion-chip>
+</div>
+
+<div class="alert alert-dark mt-2"><h3>Save for later</h3>
+</div>
+ <div class="container">
+  <ion-list >
+    <ion-item ion-button detail="true" *ngFor="let items of saved" >
+        <ion-img size="large" (click)="goTo(items)"  [src]="items.picture" style="width: 115px; height: 160px;"></ion-img>
+     <ion-item-group>
+       <ion-item>
+        <ion-label>
+          <div>
+            <ion-buttons>
+              <ion-text>{{items.price|currency}}</ion-text>
+              <ion-badge color="danger" *ngIf="checkQty(items)<10 && checkQty(items)>1">Only {{checkQty(items)}} left</ion-badge>
+            </ion-buttons>
+              <h6>{{items.name}}</h6>
+            <ion-label><h6>{{items.description}}</h6></ion-label>
+          </div>
+          </ion-label>
+       </ion-item>
+          <ion-button size="small" (click)="moveToCart(items)">Move to Cart</ion-button>
+     </ion-item-group>
+    </ion-item>
+  </ion-list>
+</div> 
+</ion-content>
+
+<app-page-footer></app-page-footer>

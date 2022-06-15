@@ -1,0 +1,142 @@
+<app-page-header></app-page-header>
+<ion-content>
+
+  <div class="container-fluid">
+    <div class="row g-2">
+
+      <div class="col-md-12 p-4 bg-white">
+        <div class="row">
+          <div class="col-8 col-md-10">
+            <h6>{{data.name}}</h6>
+          </div>
+          <div class="col-4 col-md-2">
+            <ion-icon color="warning" name="star" *ngIf="data.rating>0"></ion-icon>
+            <ion-icon color="warning" name="star" *ngIf="data.rating>1"></ion-icon>
+            <ion-icon color="warning" name="star" *ngIf="data.rating>2"></ion-icon>
+            <ion-icon color="warning" name="star" *ngIf="data.rating>3"></ion-icon>
+            <ion-icon color="warning" name="star" *ngIf="data.rating>4"></ion-icon>
+          </div>
+        </div>
+        <div class="row">
+          <p>{{data.description}}</p>
+        </div>
+       
+      </div>
+    
+      <div class="col-md-12 bg-white">
+        <ion-item lines="none">
+            <ion-icon id="heart" slot="start" name="heart"></ion-icon>
+          <ion-icon slot="end" name="share"></ion-icon>
+      </ion-item>
+        <ion-slides pager="true" [options]="{ zoom: true, grabCursor: true }" >
+          <ion-slide *ngFor="let model of dynamicPictures">
+            <ion-img #image id="image" 
+      ionImgViewer
+      title="Image View"
+      text="Double tap for zoom"
+      scheme="light" [src]="model" (ionImgWillLoad)="willLoadImage()" (ionImgDidLoad)="loadImage(model)" (ionError)="errorLoad()" ></ion-img>
+          </ion-slide>
+          <ion-card id="loading" hidden>
+            <ion-spinner   name="crescent"></ion-spinner>
+          </ion-card>
+        </ion-slides>
+      </div>
+    
+      <div class="col-md-12 p-4 bg-white" *ngIf="data.models.length >1">
+        <ion-item lines="none">
+            <h5><b>Color :</b></h5>
+        </ion-item>
+          <ion-row>
+            <ion-slides [options]="{ slidesPerView: '3', zoom: false, grabCursor: true }" >
+              <ng-container *ngFor="let color of data.models">
+    
+                <ion-slide name="inactive" (click)="setColor(color.id)" *ngIf="color.id!==''" [id]="color.id" style="margin-left:4px; margin-right:4px;">
+                  <span class="dot"    [style.background]="color.id"></span>
+             </ion-slide>
+              </ng-container>
+              
+            </ion-slides>
+            </ion-row>
+      </div>
+    
+      <div class="col-md-12 p-4 bg-white" >
+        <ion-item lines="none">
+          <h5><b>Size :</b></h5>
+      </ion-item>
+        <ion-row >
+          <div class="scrollmenu">
+            <ion-button *ngFor="let size of data.size " (click)="setSize(size)" color="medium" [id]="size">{{size}}</ion-button> 
+          </div>
+        </ion-row>
+      </div>
+    
+      <div class="col-md-12 p-3 bg-white">
+        <ion-item>
+          <ion-label slot="start"><h2><b>{{dynamicPrice | currency}}</b></h2></ion-label>
+          <ion-item-group slot="end">
+            <ion-label>
+              <div class="qty-selector">
+                <ion-button  fill="clear" (click)="adjustqty('minus')">-</ion-button>
+                <ion-label>{{orderQty}}</ion-label>
+                <ion-button fill="clear" (click)="adjustqty('plus')">+</ion-button>
+              </div>
+              <ion-label *ngIf="dynamicQty<10 && dynamicQty>1"><h6>Only {{dynamicQty}} left</h6></ion-label>
+            </ion-label>
+            <ion-label>
+    
+            </ion-label>
+          </ion-item-group>
+        </ion-item>
+            <ion-item-group>
+              <ion-item lines="none">
+                <ion-item-group>
+                  <h4>get it by <b>{{data.deliveryDate | date}}</b></h4>
+                  <ion-label>Over 50$ buy shipping fee are not considered<br>for US customers</ion-label>
+                  <h4>Ship from {{data.shipment}}</h4>
+                  <ion-label color="tertiary">
+                      <ion-text *ngIf="data.shippingFee== 0">Free shipping,</ion-text>
+                      <ion-text *ngIf="data.deliveryFee== 0">free delivery.</ion-text>
+                      <ion-text *ngIf="!data.policy">but no return allowed</ion-text> 
+                      <ion-text *ngIf="data.policy">free return</ion-text>
+                  </ion-label>
+                </ion-item-group>
+              </ion-item>
+              <ion-item lines="none"></ion-item>
+              
+            </ion-item-group>
+      </div>
+    
+      <div class="col-md-12 p-3 bg-white">
+        <ion-button (click)="authorized(data)" expand="block"  color="tertiary">Buy Now</ion-button>
+        <ion-button (click)="addToCart(data)" expand="block" color="warning">Add To Cart</ion-button>
+      </div>
+    
+      <div class="col-md-12 bg-white">
+        <ng-container *ngIf="data.models.length>0">
+          <ion-img *ngFor="let model of data.models" [src]="model.pictures[0]"></ion-img>
+        </ng-container>
+        </div>
+    
+      <div class="col-md-12 bg-white">
+          <ion-item>
+            <ion-label><b>About this item</b></ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-textarea readonly="true" style="text-align: justify; margin-top:20px;">
+              {{data.about}}
+            </ion-textarea>
+          </ion-item>
+        </div>
+
+    </div>
+
+
+
+  </div>
+
+ 
+
+</ion-content>
+
+
+<app-page-footer></app-page-footer>

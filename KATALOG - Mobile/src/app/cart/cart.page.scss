@@ -1,0 +1,23 @@
+ion-item{
+  ion-button{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 12px;
+  }
+  ion-badge{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-left: 10px;
+    font-family: sans-serif;
+  }
+}
+h3{
+  margin-left:15px;
+}
+
+.alert{
+  padding: 0;
+}

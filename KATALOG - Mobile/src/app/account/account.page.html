@@ -1,0 +1,245 @@
+<ion-header  mode=ios>
+  <ion-toolbar  style=" --background: #4b7bcde8;">
+    <ion-buttons slot="start">
+   <ion-back-button color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons>
+      <ion-title class="width">
+        <ion-text size="LARGE" color="warning">
+          K</ion-text>
+        <ion-text color="danger">
+          <ion-icon size="LARGE" name=cart></ion-icon>
+        </ion-text>
+        <ion-text color="light">TALOG</ion-text>
+      </ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+ </ion-header>
+
+<ion-content>
+  <div class="alert alert-tertiary" style="background: #7ea4e6f5;" >
+      <h2 style="color:white;">{{welcomeWord}}</h2>
+  </div>
+  
+
+  <div class="p-2 border">
+    <div class="container-lg  border">
+      <div class="row">
+        <div class="col-3">
+          <small *ngIf="browsing.length!==0" style="padding-left: 10px; 
+          padding-right: 10px;
+          font-size: 16px;
+          font-weight: bold;" class="indicator">{{browsing.length}}</small>
+          <ion-chip>
+            <ion-label style="font-weight:bold; font-size: 18px;">Historic</ion-label>
+          </ion-chip>
+        </div>
+  
+       <div class="col-3" routerLink="/helpcenter" routerDirection="forward">
+          <ion-chip>
+          <ion-label style="font-weight:bold; font-size: 18px;">Help</ion-label>
+        </ion-chip>
+      </div>
+  
+      <div class="col-3" routerLink="/order" routerDirection="forward">
+        <small *ngIf="orders$|async as order" style="padding-left: 10px; 
+        padding-right: 10px;
+        font-size: 16px;
+        font-weight: bold;" class="indicator">{{order.length}}</small>
+        <ion-chip>
+        <ion-label style="font-weight:bold; font-size: 18px;">Orders</ion-label>
+      </ion-chip>
+      </div>
+  
+      <div class="col-3" routerLink="/cart" routerDirection="forward">
+        <small *ngIf="cartItem.length!==0" style="padding-left: 10px; 
+          padding-right: 10px;
+          font-size: 16px;
+          font-weight: bold;" class="indicator">{{cartItem.length}}</small>
+        <ion-chip>
+        <ion-label style="font-weight:bold; font-size: 18px;">Cart</ion-label>
+      </ion-chip>
+    </div>
+  
+    <div class="col-3" (click)="navigateTo('Wish List')">
+      <small *ngIf="likeItem.length!==0" style="padding-left: 10px; 
+      padding-right: 10px;
+      font-size: 16px;
+      font-weight: bold;" class="indicator">{{likeItem.length}}</small>
+      <ion-chip>
+      <ion-label style="font-weight:bold; font-size: 18px;">Favorites</ion-label>
+    </ion-chip>
+    </div>
+
+      </div>
+      
+    </div>
+  </div>
+ 
+  <div class="row">
+
+    <div *ngIf="connected" class="col-md-12 border p-4">
+      <h4>Recent Orders</h4>
+      <ng-container *ngIf="orders$|async as order">
+        <ion-slides style="margin-bottom:20px;" [options]="{ slidesPerView: '3', zoom: false, grabCursor: true }">
+          <ng-container *ngFor="let item of orders$| async">
+            <ion-slide style="margin: 20px">
+              <ion-item-group>
+                <ion-img [src]="item.items.picture" style="max-height: 300px; max-width: 300px"></ion-img>
+                <ion-row>
+                  <ion-badge color="danger">
+                    <h5>{{item.items.price|currency}}</h5>
+                  </ion-badge>
+                </ion-row>
+              </ion-item-group>
+            </ion-slide>
+          </ng-container>
+            </ion-slides>
+            <ion-label routerLink="/order" routerDirection="forward" color="tertiary">see all orders</ion-label>
+            <div class="alert alert-default" *ngIf="order.length==0">
+              <ion-button class="border" expand="block" fill="clear">No recent orders found!</ion-button>
+            </div>
+          </ng-container>
+      
+    </div>
+    
+    <div class="col-md-12 border p-4">
+      <h4>Your cart</h4>
+      <ng-container *ngIf="cartItem.length!==0 && isOnline">
+        <ion-slides style="margin-bottom:20px;" [options]="{ slidesPerView: '3', zoom: false, grabCursor: true }">
+          <ng-container *ngFor="let cart of cartItem">
+            <ion-slide style="margin: 20px">
+              <ion-item-group>
+                  <img [src]="cart.picture" style="max-height: 300px; max-width: 300px; "/>
+                <ion-label>
+                    <p>{{cart.description}}</p>
+                    <h5 style="font-weight: bold; font-size:16px;">{{cart.price|currency}}</h5>
+                </ion-label>
+              </ion-item-group>
+            </ion-slide>
+          </ng-container>
+            </ion-slides>
+            <ion-label routerLink="/cart" routerDirection="forward" color="tertiary">Visit my cart and checkout now</ion-label>
+      </ng-container>
+      <div class="alert alert-default" *ngIf="cartItem.length==0 && isOnline">
+        <ion-button class="border" expand="block" fill="clear">Your cart is empty, add new items!</ion-button>
+      </div>
+      <ion-chip color="danger" *ngIf="!isOnline">
+        <ion-icon size="large" name="alert-circle"></ion-icon>
+        <h4>No internet connection</h4>
+      </ion-chip> 
+    </div>
+
+    <div class="col-md-12 border p-4">
+      <h4>Favorites</h4>
+      <ng-container *ngIf="likeItem.length!==0 && isOnline">
+        <ion-slides style="margin-bottom:20px;" [options]="{ slidesPerView: '3', zoom: false, grabCursor: true }">
+          <ng-container *ngFor="let like of likeItem">
+            <ion-slide style="margin: 20px">
+              <ion-item-group>
+                <ion-img [src]="like.models[0].pictures[0]" style="max-height: 300px; max-width: 300px"></ion-img>
+                <ion-row>
+                  <ion-badge color="danger">
+                    <h5>{{like.caracteristic[0].price|currency}}</h5>
+                  </ion-badge>
+                </ion-row>
+              </ion-item-group>
+            </ion-slide>
+          </ng-container>
+            </ion-slides>
+            <ion-label (click)="navigateTo('Wish List')"   color="tertiary">see the complete list</ion-label>
+      </ng-container>
+      <div class="alert alert-default" *ngIf="likeItem.length==0 && isOnline">
+        <ion-button class="border" expand="block" fill="clear">Your list is empty, add items!</ion-button>
+      </div> 
+      <ion-chip color="danger" *ngIf="!isOnline">
+        <ion-icon size="large" name="alert-circle"></ion-icon>
+        <h4>No internet connection</h4>
+      </ion-chip> 
+    </div>
+
+    <div class="col-md-12 border p-4">
+      <h4>Recent Browsing Items</h4>
+      <ng-container *ngIf="browsing.length!==0 && isOnline">
+        <ion-slides style="margin-bottom:20px;" [options]="{ slidesPerView: '3', zoom: false, grabCursor: true }">
+          <ng-container *ngFor="let historic of browsing">
+            <ion-slide style="margin: 20px">
+              <ion-item-group>
+                <ion-img [src]="historic.models[0].pictures[0]" style="max-height: 300px; max-width: 300px"></ion-img>
+                <ion-row>
+                  <ion-badge color="danger">
+                    <h5>{{historic.caracteristic[0].price|currency}}</h5>
+                  </ion-badge>
+                </ion-row>
+              </ion-item-group>
+            </ion-slide>
+          </ng-container>
+            </ion-slides>
+            <ion-label (click)="navigateTo('Recent Views')"  color="tertiary">View all recent browsing items</ion-label>
+      </ng-container>
+      <div class="alert alert-default" *ngIf="browsing.length==0 && isOnline">
+        <ion-button class="border" expand="block" fill="clear">Browsing Historic empty, start shopping now!</ion-button>
+      </div>
+      <ion-chip color="danger" *ngIf="!isOnline">
+        <ion-icon size="large" name="alert-circle"></ion-icon>
+        <h4>No internet connection</h4>
+      </ion-chip>
+    </div>
+
+    <div class="col-md-12 border p-4">
+      <h4>Login and password</h4>
+      <div *ngIf="connected" class="container">
+        <ion-card>
+          <ion-card-title class="ion-padding"> <h4>Change Password</h4></ion-card-title>
+          <ion-card-content>
+            <ng-form [formGroup]="passwordForm" (ngSubmit)="submit()">
+              <ion-item>
+                <ion-chip>
+                  <ion-input type="password" class="field" formControlName="old" placeholder="Old Password"></ion-input>
+                         </ion-chip>
+              </ion-item>
+                <div *ngFor="let error of errorMessages.password" class="padding-left">
+                <ng-container *ngIf="getOldPassword().hasError(error.type) && (getOldPassword().dirty || getOldPassword().touched)">
+                  <small style="color: red;" class="error-message">{{error.message}}</small>
+                </ng-container>
+              </div>
+              <ion-item>
+                <ion-chip>
+                  <ion-input type="password" class="field" formControlName="new" placeholder="New Password"></ion-input>
+                   </ion-chip>
+              </ion-item>
+               <div *ngFor="let error of errorMessages.password" class="padding-left">
+                <ng-container *ngIf="getNewPassword().hasError(error.type) && (getNewPassword().dirty || getNewPassword().touched)">
+                  <small style="color: red;"  class="error-message">{{error.message}}</small>
+                </ng-container>
+              </div>
+              <ion-item>
+                <ion-button expand="block" type="submit">Change password</ion-button>
+              </ion-item>
+              
+            </ng-form>
+          </ion-card-content>
+        </ion-card>
+       
+      
+      </div>
+
+      <div class="container">
+        <ion-card>
+          <ion-card-title class="ion-padding">Connection</ion-card-title>
+          <ion-card-content>
+            <ion-button *ngIf="!connected" expand="block" color="secondary" routerLink="/login" routerDirection="forward">Sign In</ion-button>
+            <ion-button *ngIf="connected" expand="block" color="medium" (click)="signout()">Sign Out</ion-button>
+          </ion-card-content>
+        </ion-card>
+         </div>
+
+    </div>
+    
+  
+    
+  </div>
+  
+</ion-content>
+
+<app-page-footer></app-page-footer>

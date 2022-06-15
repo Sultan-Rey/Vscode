@@ -1,0 +1,29 @@
+<ion-footer>
+  <ion-toolbar >
+    <ion-tabs>
+      <ion-tab-bar color="light">
+        <ion-tab-button  (click)="routeTo('home')"  routerDirection="back">
+          <ion-icon name="home-outline"></ion-icon>
+          <ion-label>Home</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button (click)="routeTo('cart')"  routerDirection="forward">
+          <ion-icon name="cart-outline"></ion-icon>
+          <ion-label>Cart</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button (click)="routeTo('account')"  routerDirection="forward">
+          <ion-icon name="person-circle-outline"></ion-icon>
+          <ion-label>Profil</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button (click)="routeTo('order')"  routerDirection="forward">
+          <ion-icon name="cube-outline"></ion-icon>
+          <ion-label>Order</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    
+    </ion-tabs>
+  </ion-toolbar>
+  
+</ion-footer>

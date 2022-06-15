@@ -1,0 +1,163 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title  class="width" mode=ios >
+      <ion-text size="LARGE" color="warning">
+        K</ion-text>
+        <ion-text color="danger"><ion-icon size="LARGE" name=cart></ion-icon></ion-text>
+        <ion-text >ta</ion-text><img title="app icon area" class="icon" src="assets/icon/lipstick.png"/><ion-text>og</ion-text>
+      </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<!-- -->
+
+<div style="padding-top: 4px; padding-bottom: 4px; border-bottom: 4px solid #eee;">
+  <fieldset>
+    <legend><label>Payment Review</label></legend>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="8">Item Cost</ion-col>
+        <ion-col>{{amountOrder | currency}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="8">Shipping Fee</ion-col>
+        <ion-col>{{shippingfee | currency}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="8">Tax Fee</ion-col>
+        <ion-col>{{taxfee | currency}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="8">Delivery</ion-col>
+        <ion-col>{{deliveryfee | currency}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="8">Discount</ion-col>
+        <ion-col>{{promotion | currency}}</ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-item>
+      <ion-label position="fixed" color="danger" slot="start">TOTAL :</ion-label>
+      <ion-label style="font-weight: bold;" slot="end">{{ calculCost(shippingfee,taxfee,deliveryfee,promotion, amountOrder) | currency}}</ion-label>
+    </ion-item>
+  </fieldset>
+</div>
+
+<div class="container" style="padding-top: 4px; padding-bottom: 4px;">
+  <ion-item (click)="shipaddressChange()" detail="true">
+    <ion-buttons>
+      <ion-label>Shipping Address :</ion-label>
+    </ion-buttons>
+    <ion-item>
+      <label position="stacked">{{shippingAddress}} </label>
+    </ion-item>
+  </ion-item>
+
+  <div  *ngIf="!collapse && shippingAddress!=='No default address set yet'">
+   
+    <ion-list>
+      <ng-container *ngFor="let address of addresses">
+      <ion-radio-group *ngIf="address!==shippingAddress">
+          <ion-item>
+            <ion-button fill="clear" (click)="setAsDefault(address.id)" slot="start" shape="round"><input title="set as default" [checked]="address.default" name="default" type="radio"/></ion-button>
+            <ion-label>
+              <address>
+                <h6>{{address.name}}</h6>
+                <p>{{address.phone}}</p>
+                <h6>{{address.zipcode}}-{{address.state}}</h6>
+                <h6>{{address.city}}</h6>
+                <h6>{{address.address1}}</h6>
+                <h6>{{address.address2}}</h6>
+              </address>
+            </ion-label>
+          </ion-item>
+      </ion-radio-group>
+    </ng-container>
+    </ion-list>
+  
+    
+  </div>
+</div>
+<div class="container">
+  <ion-item>
+    <ion-buttons>
+      <ion-text color="primary" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-weight: bold;">
+        <ion-label>Estimated delivery date : </ion-label>
+      </ion-text>&nbsp;
+      <ion-text style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-weight: bold;">
+        <ion-label>{{deliverydate|date}}</ion-label></ion-text>
+    </ion-buttons>
+  </ion-item>
+  <fieldset>
+    <ion-list>
+      <ion-item *ngFor="let product of data.items">
+          <ion-thumbnail slot="start">
+            <ion-img [src]="product.picture"></ion-img>
+          </ion-thumbnail>
+        <ion-label>
+          <ion-item-group>
+            <h5>{{product.name}}</h5>
+            <p>{{product.description}}</p>
+              <ion-buttons >
+                <span  *ngIf="product.color!==''&& product.color!==undefined" class="dot" [style.background]="product.color"></span>
+                &nbsp;|
+                <h6 *ngIf="product.size!=='' && product.size!==undefined"> {{product.size}}</h6>
+              </ion-buttons>
+              
+            <ion-buttons>
+              <ion-label>QTY : {{product.qty}}</ion-label>&nbsp;
+              <ion-label><ion-icon name="pricetag"></ion-icon><h5><b>{{product.price | currency}}</b></h5></ion-label>
+            </ion-buttons>
+          </ion-item-group>
+        </ion-label>
+      </ion-item>
+  </ion-list>
+  </fieldset>
+  </div> 
+
+ 
+
+  <div id="place" style="margin-left: 18%; margin-right: 18%;">
+    <section>
+        <google-pay-button 
+            environment="TEST"
+            [paymentRequest]="paymentRequest"
+            buttonSizeMode="FULL"
+            (loadpaymentdata)="onLoadPaymentData($event)"></google-pay-button>
+    </section>
+  </div>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar >
+    <ion-tabs>
+      <ion-tab-bar color="dark">
+        <ion-tab-button routerLink="/home"  routerDirection="forward">
+          <ion-icon name="home-outline"></ion-icon>
+          <ion-label>Home</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button routerLink="/cart"  routerDirection="forward">
+          <ion-icon name="cart-outline"></ion-icon>
+          <ion-label>Cart</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button routerLink="/account"  routerDirection="forward">
+          <ion-icon name="person-circle-outline"></ion-icon>
+          <ion-label>Profil</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button routerLink="/order"  routerDirection="forward">
+          <ion-icon name="cube-outline"></ion-icon>
+          <ion-label>Order</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    
+    </ion-tabs>
+  </ion-toolbar>
+  
+</ion-footer>

@@ -1,0 +1,71 @@
+<app-page-header></app-page-header>
+
+<ion-content>
+ 
+  <div>
+    <ion-item>
+      <ion-searchbar placeholder="search for orders"></ion-searchbar>
+      <ion-button fill="clear" slot="end">
+        Filter <ion-icon name="chevron-down-outline" ></ion-icon>
+      </ion-button>
+    </ion-item>
+    
+  </div>
+  <ion-item-group *ngFor="let order of orders$ | async">
+  <div class="container-fluid bg-light">
+    <div class="row p-2">
+      <div class="col-md-4">
+          <ion-label>Date Order <p>{{getDate(order.date_order)}}</p></ion-label>
+      </div>
+      <div class="col-md-5">
+          <ion-label>Ship To : <p>{{order.shipment.shipping_destination}}</p></ion-label>
+      </div>
+      <div class="col-md-3">
+        <ion-button size="small" class="mt-2" (click)="details(order)" color="medium">Order Details
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </div>
+    
+    <ion-item *ngFor="let item_order of order.items">
+      <ion-item-group style="--size:large;" slot="start">
+        <ion-img style="width:160px; max-height:165px;" [src]="item_order.picture" alt="product image"></ion-img>
+        <ion-chip>
+          {{item_order.qty}}
+        </ion-chip>
+      </ion-item-group>
+      
+      <ion-label>
+        <h3 style="font-weight:bold;">{{item_order.name}}</h3>
+        <ion-buttons>
+          <button>Size : {{item_order.size}} </button>
+          <button [style.background]="item_order.color">- Color - </button>
+        </ion-buttons>
+         <ion-text *ngIf="data=='Refunds'" color="danger">
+         <h4 >Refunds Status</h4></ion-text>
+         <ion-buttons>
+          <h5 style="font-weight:bold;" *ngIf="data!=='Refunds'">Estimate Delivery date  : </h5>
+          <p style="margin-left: 10px;" *ngIf="data!=='Refunds'">{{getDate(item_order.deliveryDate)|date}}</p>
+         </ion-buttons>
+         
+         <ion-buttons>
+           <span style="margin-right: 2px;">
+            <h5 style="font-weight:bold;">Delivery method : </h5>
+           </span>
+            <ion-badge slot="end" size="small" expand="block" color="warning">{{order.shipment.carrier}}
+              <ion-icon name="chevron-down"></ion-icon>
+            </ion-badge>
+         </ion-buttons>
+         <ion-buttons>
+           <ion-label slot="end" [color]="order.shipment.status=='Delivered' || order.shipment.status=='Shipped' || order.shipment.status=='Not shipped yet' ? 'tertiary':'danger'" style="padding-left: 30px; float: left; margin-top: 5px; "  >
+            <h6>{{order.shipment.status}}</h6>
+           </ion-label>
+         </ion-buttons>
+      </ion-label>     
+    </ion-item>
+    
+  </ion-item-group>
+
+</ion-content>
+<app-page-footer></app-page-footer>

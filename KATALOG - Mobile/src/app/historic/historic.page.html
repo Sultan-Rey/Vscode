@@ -1,0 +1,91 @@
+<app-page-header></app-page-header>
+<ion-content>
+  <div class="alert alert-dark"> <!-- Messages Bar -->
+    <h4>{{data}}</h4>
+  </div>
+  <div class="container-fluid">
+    <ion-grid>
+      <ion-row *ngIf="data!=='Buy by categories' && data!=='brand'">
+        <ng-container  *ngFor="let item of items| async">
+          <ion-col size="6" *ngIf="updateCheck(item,data) && (data=='Recent Views' || data =='Wish List')">
+            <ion-card-content style="padding-bottom: 0;" (click)="goTo(item)">
+              <ion-img style="box-sizing:border-box;" [src]="item.models[0].pictures[0]"></ion-img>
+            </ion-card-content>
+            <ion-card-header (click)="goTo(item)">
+              <ion-text color="dark">
+                <h6  style="font-size: 13px; font-weight: bold;">{{item.description}}</h6>
+              </ion-text>
+              <ion-card-subtitle >{{item.name}}</ion-card-subtitle>
+            </ion-card-header>
+
+            <ion-card-title>
+              <ion-item>
+                <ion-label color="dark">
+                  {{item.caracteristic[0].price|currency}}
+                </ion-label>
+                <ion-label>
+                  <ion-icon name="star" *ngIf="item.rating>0"></ion-icon>
+                  <ion-icon name="star" *ngIf="item.rating>1"></ion-icon>
+                  <ion-icon name="star" *ngIf="item.rating>2"></ion-icon>
+                  <ion-icon name="star" *ngIf="item.rating>3"></ion-icon>
+                  <ion-icon name="star" *ngIf="item.rating>4"></ion-icon> 
+                </ion-label>
+                
+              </ion-item>
+            </ion-card-title>
+        </ion-col>
+        <ion-col size="6" *ngIf="data!=='Recent Views' && data !=='Wish List'">
+          <ion-card-content style="padding-bottom: 0;" (click)="goTo(item)">
+            <ion-img style="box-sizing:border-box;" [src]="item.models[0].pictures[0]"></ion-img>
+          </ion-card-content>
+          <ion-card-header (click)="goTo(item)">
+            <ion-text color="dark">
+              <h6  style="font-size: 13px; font-weight: bold;">{{item.description}}</h6>
+            </ion-text>
+            <ion-card-subtitle >{{item.name}}</ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-title>
+            <ion-item>
+              <ion-label color="dark">
+                {{item.caracteristic[0].price|currency}}
+              </ion-label>
+              <ion-label>
+                <ion-icon name="star" *ngIf="item.rating>0"></ion-icon>
+                <ion-icon name="star" *ngIf="item.rating>1"></ion-icon>
+                <ion-icon name="star" *ngIf="item.rating>2"></ion-icon>
+                <ion-icon name="star" *ngIf="item.rating>3"></ion-icon>
+                <ion-icon name="star" *ngIf="item.rating>4"></ion-icon> 
+              </ion-label>
+              
+            </ion-item>
+          </ion-card-title>
+      </ion-col>
+        </ng-container>
+      </ion-row>
+
+      <ion-row *ngIf="data=='Buy by categories'">
+        <ion-card *ngFor="let categ of categs| async" >
+          <ion-card-content (click)="linkTo(categ.categoryName,'category')">
+            <ion-img [src]="categ.image"></ion-img>
+            <ion-card-header>
+              <ion-card-title>{{categ.categoryName}}</ion-card-title>
+            </ion-card-header>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+      <ion-row *ngIf="data=='brand'">
+        <ion-card *ngFor="let brand of brands| async" >
+          <ion-card-content (click)="linkTo(brand.brandName,'brand')">
+            <ion-img [src]="brand.logo"></ion-img>
+            <ion-card-header>
+              <ion-card-title>{{brand.brandName}}</ion-card-title>
+              <ion-card-subtitle>{{brand.slogan}}</ion-card-subtitle>
+            </ion-card-header>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
+<app-page-footer></app-page-footer>

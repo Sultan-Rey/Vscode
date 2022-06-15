@@ -1,0 +1,52 @@
+.icon{
+    width: 20px;
+    height: 28px;
+    border: none;
+    padding:2px;
+  }
+  .width{
+    font-size: 26px;
+  }
+
+ .container ion-item {
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      padding: auto;
+  }
+  #img{
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+      padding: auto;
+  }
+  .forgot{
+      float: right;
+  }
+  .forgot ion-label{
+      font-size: 14px;
+      color: #c8c8c8;
+      margin-top: 10px;
+  }
+
+  section {
+    margin-top: 1em;
+    margin-bottom: 2.5em;
+  }
+
+  section:not(.full-width),
+  .full-width > header {
+    padding: 0 10px;
+  }
+
+  #signup{
+      width: 100%;
+      text-align: center;
+      margin-top: 50px;
+      }
+      .my-custom-class {
+        --background: #222;
+        --spinner-color: #fff;
+      
+        color: #fff;
+      }

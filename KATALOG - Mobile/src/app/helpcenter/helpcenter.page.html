@@ -1,0 +1,136 @@
+<ion-header  mode=ios>
+  <ion-toolbar  color="dark">
+    <ion-buttons slot="start">
+   <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons>
+      <ion-title  class="width" mode=ios >
+        <ion-text size="LARGE" color="warning">
+          K</ion-text>
+          <ion-text color="danger"><ion-icon size="LARGE" name=cart></ion-icon></ion-text>
+          <ion-text >ta</ion-text><img title="app header" alt="image icon" class="icon" src="assets/icon/lipstick.png"/><ion-text>og</ion-text>
+        </ion-title>
+    </ion-buttons>
+
+  </ion-toolbar>
+  <ion-buttons>
+    <ion-item-divider>
+      
+      <ion-icon name="information-circle-outline"></ion-icon>
+      <ion-label>Customer services</ion-label>
+    </ion-item-divider>
+  </ion-buttons>
+ </ion-header>
+<ion-content>
+  
+  <div>
+    <ion-card *ngIf="connected">
+      <ion-card-title></ion-card-title>
+      <ion-card-content>
+        <ion-text color="dark">
+          <b>KINDNESS : </b>{{kindnessIntroSpeech}}
+        </ion-text>
+      </ion-card-content>
+      <ion-card-header>
+        <ion-card-subtitle>
+          <ion-button (click)="scenario('ORDER')" color="medium">Order issue</ion-button>
+          <ion-button (click)="scenario('OTHER')" color="light">Other ?</ion-button>
+        </ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card *ngIf="dialogFlow.box1">
+     
+      <ion-card-content>
+        <ion-item>
+          <ion-text color="dark">
+            Which order you mean ?
+          </ion-text>
+        </ion-item>
+        <ng-container *ngFor="let item of order">
+          <ion-item *ngIf="item.shipment.status!=='Delivered'" >
+            <ion-buttons slot="start">
+              <ion-thumbnail  (click)="orderInformation(item)"  *ngFor="let product of item.product">
+                <ion-img [src]="product.features[0].pictures[0]"></ion-img>
+              </ion-thumbnail>
+            </ion-buttons>
+            <ion-label (click)="orderInformation(item)" >
+              <h4>{{item.orderId}}</h4>
+            </ion-label>
+          </ion-item>
+        </ng-container>
+        
+        
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="dialogFlow.box2">
+      <ion-card-title></ion-card-title>
+      <ion-card-content>
+        <ion-text color="dark">
+          Order # <b>{{orderInfo.orderId}}</b>
+        </ion-text>
+        <ion-item>
+          With destination : {{orderInfo.shipment.shipping_destination}}
+        </ion-item>
+        <ion-item *ngIf="orderInfo.shipment.status=='Not shipped yet'">
+          {{orderInfo.shipment.status}} go to order page for more update about your order
+        </ion-item>
+        <ion-item *ngIf="orderInfo.shipment.status=='Shipped'">
+          {{orderInfo.shipment.status}}! your order is on the way dear customer.
+        </ion-item>
+      </ion-card-content>
+      <ion-card-header>
+      <ion-item>Did you find me helpful ? </ion-item>
+      <ion-item>
+        <ion-button (click)="scenario('END')" color="medium">Yes a lot</ion-button>
+          <ion-button (click)="scenario('MORE_HELP')" color="light">Not enough</ion-button>
+      </ion-item>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card *ngIf="dialogFlow.box3">
+      <ion-card-title></ion-card-title>
+      <ion-card-content>
+        <ion-text color="dark">
+          {{kindnessEndSpeech}}
+        </ion-text>
+      </ion-card-content>
+      <ion-card-header *ngIf="dialogFlow.box3Option">
+        <ion-card-subtitle>
+          <ion-button (click)="scenario('TALK')" color="medium">Talk with someone</ion-button>
+          <ion-button (click)="scenario('BETTER')" color="light">Try better next</ion-button>
+        </ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+    
+    <ion-card *ngIf="dialogFlow.box4">
+      <ion-card-title></ion-card-title>
+      <ion-card-content>
+        <ion-text color="dark">
+         <b>KINDNESS : </b>OK but don't stop shopping for your favorites items in our store
+        </ion-text>
+        <ion-button routerLink="/home" routerDirection="back">Continue shopping</ion-button>
+      </ion-card-content>
+    </ion-card>
+    
+    
+  </div>
+  <div class="stream" *ngIf="connected">
+    <ion-item lines="none" *ngFor="let msg of message">
+      <ion-chip text-wrap color="light" *ngIf="msg.author == userId">You</ion-chip>
+      <ion-chip text-wrap color="light" *ngIf="msg.author !== userId">{{msg.author}}</ion-chip>
+      <ion-badge text-wrap slot="start" color="light" *ngIf="msg.author != userId">{{ msg.content }}</ion-badge>
+      <ion-badge text-wrap slot="end" color="primary" *ngIf="msg.author == userId">{{ msg.content }}</ion-badge>
+      <ion-label>{{msg.date_msg|date}}</ion-label>
+    </ion-item>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-item>
+      <ion-input [(ngModel)]="textMesage" placeholder="tell us what's happened..."></ion-input>
+      <ion-button (click)="sendMessage(textMesage)">Send <ion-icon name="send"></ion-icon></ion-button>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

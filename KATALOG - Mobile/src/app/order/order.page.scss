@@ -1,0 +1,57 @@
+ion-thumbnail{
+  --size:60px;
+}
+
+#name{
+    display: inline-block;
+    margin: 0;
+    padding:0;
+  }
+  #icon{
+    margin-left: 5px;
+    position: absolute;
+    display: inline-block;
+    color: rgb(255, 208, 80);
+    width: 11px;
+    padding: 0;
+  }
+  .margin{
+    margin-left: 18px;
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+  .margin p{
+    font-size: 16px;
+    line-height: 22px;
+    color: #8c8c8c;
+    margin: 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical; 
+  }
+  .label{
+    margin-left: 14px;
+  }
+  .label button{
+    background: none;
+    border-right: 1px solid yellowgreen;
+    box-shadow: none;
+  }
+  .label button ion-label{
+    font-size: 12px;
+    line-height: 12px;
+  }
+  #qty{
+    display: inline;
+    float: right;
+    border: 1px solid #8c8c8c;
+    border-radius: 50%;
+    padding: 3px;
+    text-align: center;
+    background: rgb(44, 44, 48);
+    color: cornsilk;
+    font-weight: bold;
+  }
+
+  

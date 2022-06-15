@@ -1,0 +1,47 @@
+<app-page-header></app-page-header>
+
+<ion-content>
+ 
+
+    <div class="container-fluid">
+     
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" *ngFor="let item of product$| async">
+              <ion-card-content (click)="goTo(item)" style="padding-bottom: 0;"  >
+                <ion-img style="box-sizing:border-box;" (click)="goTo(item)" [src]="item.models[0].pictures[0]"></ion-img>
+              </ion-card-content>
+              <ion-card-header >
+                <ion-text color="dark">
+                  <h6  style="font-size: 13px; font-weight: bold;" (click)="goTo(item)">{{item.description}}</h6>
+                </ion-text>
+                <ion-card-subtitle  >{{item.name}}</ion-card-subtitle>
+              </ion-card-header>
+  
+              <ion-card-title>
+                <ion-item>
+                  <ion-label (click)="goTo(item)" color="dark">
+                    {{item.caracteristic[0].price|currency}}
+                  </ion-label>
+                  <div style="text-align:center; max-width: 36px; max-height: 19.188px; overflow: hidden;">
+                    <div class="circle" *ngFor="let color of item.models.id">
+                      <span class="dot" *ngIf="color.color!==''" [style.background]="color.color"></span>
+                    </div>
+                  </div> 
+                  <ng-container *ngFor="let likeitem of likeItems">
+                    <ion-icon  (click)="putItemInWishList(item)" size="small" color="danger" slot="end" [name]="item.description == likeitem.description? 'heart-outline':'heart'"></ion-icon>
+                  </ng-container>
+                  <ion-icon  *ngIf="likeItems==undefined || likeItems.length==0" size="small" color="danger" slot="end" name="heart-outline"></ion-icon>
+                </ion-item>
+              </ion-card-title>
+          </ion-col>
+          
+        </ion-row>
+
+      </ion-grid>
+    </div>
+
+ 
+
+</ion-content>
+<app-page-footer></app-page-footer>

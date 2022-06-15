@@ -1,0 +1,42 @@
+<ion-header mode="md">
+  <ion-toolbar style=" --background: #031432;"> <!--Toolbar I-->
+    <ion-buttons slot="start">
+      <ion-back-button color="light" *ngIf="location!=='/home'" [defaultHref]="location=='/historic'?'/home':''"> </ion-back-button>
+    </ion-buttons>
+    <ion-buttons>
+      <ion-title class="width">
+        <ion-text size="LARGE" color="warning">
+          K</ion-text>
+        <ion-text color="danger">
+          <ion-icon size="LARGE" name=cart></ion-icon>
+        </ion-text>
+        <ion-text color="light">TALOG</ion-text>
+      </ion-title>
+    </ion-buttons>
+    <ion-buttons *ngIf="location =='/home'" slot="end" (click)="logOrNot()">
+      <ion-label color="light">{{logUid}}</ion-label>
+      <ion-button size="icon-only" >
+        <ion-icon color="light" name="chevron-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>  <!--End Toolbar I-->
+
+  <ion-toolbar style="--background: #031432;"> <!--Toolbar II-->
+    <nav  >
+      <div class="container-fluid" >
+        <div class="input-group">
+          <input type="text" [(ngModel)]="query"  (keypress)="search($event)"  id="searchField"  placeholder="Do you searching for something...?" debounce="500"
+            style=" width: 60vw;  margin: 0 auto;" class="form-control" aria-describedby="basic-addon1">
+          <div class="input-group-prepend">
+            <span (click)="search($event)" class="input-group-textmodified bg-warning" id="basic-addon1">
+              <ion-button fill="clear" size="icon-only">
+                <ion-icon name="search"></ion-icon>
+              </ion-button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </ion-toolbar> <!--End Toolbar II-->
+
+</ion-header>

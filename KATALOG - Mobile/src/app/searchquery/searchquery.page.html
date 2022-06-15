@@ -1,0 +1,44 @@
+
+<app-page-header></app-page-header>
+<ion-content>
+  <div class="alert alert-dark"> <!-- Messages Bar -->
+    <div class="row">
+      <div class="col-md-10 col-sm-6">
+        <h5>Results</h5>
+      </div>
+      <div class="col-md-2 col-sm-6">
+        <ion-label>Filter<ion-icon name="chevron-down"></ion-icon></ion-label>
+      </div>
+    </div>
+    
+  </div>
+      <ion-list id="allproduct" >
+        <ion-item class="hide"  ion-button detail="true" *ngFor="let items of items" >
+            <ion-img size="large"  [src]="items.models[0].pictures[0]" style="width: 110px; height: 150px;"></ion-img>
+         <ion-item-group>
+           <ion-item>
+            <ion-label>
+              <div (click)="goTo(items.product)">
+                <ion-buttons>
+                  <ion-text>{{items.price|currency}}</ion-text>
+                  <ion-badge color="danger" *ngIf="items.qty<10 && items.qty>1">Only {{items.qty}} left</ion-badge>
+                </ion-buttons>
+                  <h6>{{items.name}}</h6>
+                  <p>
+        <ion-icon name="star" *ngIf="items.rating>0"></ion-icon>
+        <ion-icon name="star" *ngIf="items.rating>1"></ion-icon>
+        <ion-icon name="star" *ngIf="items.rating>2"></ion-icon>
+        <ion-icon name="star" *ngIf="items.rating>3"></ion-icon>
+        <ion-icon name="star" *ngIf="items.rating>4"></ion-icon>
+                  </p>
+                <ion-label><h6>{{items.description}}</h6></ion-label>
+              </div>
+             <ion-button (click)="addToCart(items)">Add To Cart</ion-button>
+             <!--<ion-button>Buy now</ion-button>-->
+              </ion-label>
+           </ion-item>
+         </ion-item-group>
+            
+        </ion-item>
+      </ion-list>
+</ion-content>

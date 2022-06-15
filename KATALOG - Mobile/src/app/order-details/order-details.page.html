@@ -1,0 +1,204 @@
+<ion-header mode=ios>
+  <ion-toolbar>
+    <ion-buttons style="margin-top:5%;" slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Order Details</ion-title>
+  </ion-toolbar>
+ </ion-header>
+
+<ion-content>
+  
+  <ng-container *ngIf="!nodata">
+    <div>
+      <fieldset>
+        <legend><label>Order Info</label></legend>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="8">Date Order</ion-col>
+            <ion-col>{{data.date_order | date}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="8"># Order</ion-col>
+            <ion-col>{{data.orderId | currency}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="8">Cost Order</ion-col>
+            <ion-col>{{data.amount | currency}}</ion-col>
+          </ion-row>
+        </ion-grid>
+      </fieldset>
+    </div>
+    <div >
+      <fieldset>
+        <legend><p>Shipment Status</p></legend>
+          <h6>Ship to - {{data.shipment.shipping_destination}}</h6>
+          <h5>{{data.shipment.carrier}}</h5>
+          <p>{{data.shipment.trackingnumber}}<br></p>
+          <h5 *ngIf="data.shipment.status!=='Delivered'">{{data.shipment.status}}</h5>
+          <ion-badge *ngIf="data.shipment.status=='Delivered'" color="success">Delivered</ion-badge>
+      </fieldset>
+    </div>
+    <div>
+      <fieldset>
+        <legend><p>Manage your order</p></legend>
+          <ion-button color="medium" *ngIf="this.data.shipment.status!=='Shipped'">
+            <ion-select (ionChange)="changeAddress(shippingAddress,data.orderId)" [(ngModel)]="shippingAddress" placeholder="Change shipping address">
+              <ion-select-option *ngFor="let shipaddress of address">{{shipaddress.address1}}</ion-select-option>
+            </ion-select>
+          </ion-button>
+          <ion-button *ngIf="this.data.shipment.status!=='CANCELLED' && this.data.shipment.status!=='Shipped' && this.data.shipment.status!=='Delivered'" (click)="cancelOrder(data)" color="danger">Cancel Order</ion-button>
+          <ion-button *ngIf="this.data.shipment.status!=='Shipped'" (click)="refunding(data)" color="warning">Ask for Refunds<ion-spinner id="spin2" hidden="true"></ion-spinner></ion-button>
+      </fieldset>
+    </div>
+    <div name="admin_purposes" *ngIf="userType=='ADMIN'">
+      <fieldset>
+        <legend><p>Carrier assigment</p>
+                <h6>admin only is authorized to manage carrier</h6>
+        </legend>
+         
+            <ion-button color="tertiary">Claim payment</ion-button>
+            <div>
+            <ion-select  [(ngModel)]="carrier.name" placeholder="Assign a carrier">
+              
+              <ion-select-option>UPS</ion-select-option>
+              <ion-select-option>USPS</ion-select-option>
+              <ion-select-option>BPS</ion-select-option>
+              <ion-select-option>DHL Express</ion-select-option>
+              <ion-select-option>Katalog Express</ion-select-option>
+            </ion-select>
+          </div>
+          <div>
+            <ion-input type="text" [(ngModel)]="carrier.tracking" placeholder="Carrier tracking number"></ion-input>
+          </div>
+          <div>
+            <ion-button (click)="setCarrier(carrier, data.orderId)" color="secondary">Set Carrier<ion-spinner id="spin" hidden="true" ></ion-spinner></ion-button>
+          </div>
+          
+      </fieldset>
+    </div>
+    <div>
+      <!-- <fieldset>
+        <legend><p>Payment Method</p></legend>
+          <ion-row><ion-col><h4>{{data.payment.method}}</h4></ion-col>
+            <ion-col *ngIf="data.payment.method=='PayPal'">{{data.payment.credential.email}}</ion-col>
+            <ion-col *ngIf="data.payment.method=='MasterCard'"><h6>XXXX XXXX {{data.payment.credential.options.substring(0,5)}}</h6></ion-col>
+            <ion-col *ngIf="data.payment.method=='MonCash'">{{data.payment.credential.phone}}</ion-col>
+          </ion-row>
+           <ion-row>
+             <h4>Billing address</h4>
+             <p> {{data.shipment.shipping_destination}}</p>
+          </ion-row>
+      </fieldset> -->
+    </div>
+  </ng-container>
+   
+  <ng-container *ngIf="nodata">
+    <div>
+      <fieldset>
+        <legend><p>Order Info</p></legend>
+        <ion-row><ion-col><h5>Date Order</h5></ion-col>
+              <ion-col><ion-skeleton-text><h6></h6></ion-skeleton-text></ion-col>  
+        </ion-row>
+        <ion-row><ion-col><h5># Order</h5></ion-col>
+          <ion-col><ion-skeleton-text><h6></h6></ion-skeleton-text></ion-col>  
+        </ion-row>
+        <ion-row><ion-col><h5>Cost Order</h5></ion-col>
+          <ion-col><ion-skeleton-text><h6></h6></ion-skeleton-text></ion-col>   
+        </ion-row>
+        
+      </fieldset> 
+    </div>
+    <div >
+      <fieldset>
+        <legend><p>Shipment Status</p></legend>
+        <ion-skeleton-text><h5></h5></ion-skeleton-text> 
+        <ion-skeleton-text><p></p></ion-skeleton-text> 
+        <ion-skeleton-text><h5></h5></ion-skeleton-text> 
+      </fieldset>
+    </div>
+    <div>
+      <fieldset>
+        <legend><p>Manage your order</p></legend>
+        <ion-skeleton-text><ion-button color="medium">
+          <ion-select placeholder="Change shipping address">
+            <ion-select-option>Option2</ion-select-option>
+          </ion-select>
+        </ion-button></ion-skeleton-text>  
+         <ion-skeleton-text>
+          <ion-button  color="danger">Cancel order</ion-button>
+          <ion-button  color="warning">Ask for Refunds</ion-button>
+          <ion-button color="tertiary">Claim payment</ion-button>
+         </ion-skeleton-text> 
+        <ion-skeleton-text>
+          <div>
+            <ion-select  placeholder="Assign a carrier">
+              
+              <ion-select-option>UPS</ion-select-option>
+              <ion-select-option>USPS</ion-select-option>
+              <ion-select-option>BPS</ion-select-option>
+              <ion-select-option>DHL Express</ion-select-option>
+              <ion-select-option>Katalog Express</ion-select-option>
+            </ion-select>
+          </div>
+        </ion-skeleton-text>
+          <ion-skeleton-text>
+            <div>
+              <ion-button color="secondary"></ion-button>
+            </div>
+          </ion-skeleton-text>
+          
+      </fieldset>
+    </div>
+    <div>
+      <fieldset>
+        <legend><p>Payment Method</p></legend>
+       <ion-row>
+        <ion-skeleton-text><ion-col><h6></h6></ion-col></ion-skeleton-text> 
+        <ion-skeleton-text><ion-col><h6></h6></ion-col></ion-skeleton-text> 
+           </ion-row>
+           <ion-row>
+            <ion-skeleton-text>
+              <h4>Billing address</h4>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates vitae sit consectetur! Hic, tempore nihil! Quaerat tenetur vitae magnam quae? Odio a ullam ipsum voluptatibus rem mollitia, quia totam labore?</p>
+            </ion-skeleton-text>
+                       </ion-row>
+      </fieldset>
+    </div>
+  </ng-container>
+
+
+  
+
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar >
+    <ion-tabs>
+      <ion-tab-bar color="dark">
+        <ion-tab-button routerLink="/home"  routerDirection="forward">
+          <ion-icon name="home-outline"></ion-icon>
+          <ion-label>Home</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button routerLink="/cart"  routerDirection="forward">
+          <ion-icon name="cart-outline"></ion-icon>
+          <ion-label>Cart</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button routerLink="/account"  routerDirection="forward">
+          <ion-icon name="person-circle-outline"></ion-icon>
+          <ion-label>Profil</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button routerLink="/order"  routerDirection="forward">
+          <ion-icon name="cube-outline"></ion-icon>
+          <ion-label>Order</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    
+    </ion-tabs>
+  </ion-toolbar>
+  
+</ion-footer>

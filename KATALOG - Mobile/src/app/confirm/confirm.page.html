@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Order confirmation</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="confirmation">
+    <div class="ion-text-center">
+
+      <ion-item>
+        <ion-col *ngFor="let item of product">
+          <ion-row> <ion-img  [src]="item.picture"></ion-img>
+          </ion-row>
+          <ion-row>{{item.price}}</ion-row>
+        </ion-col>
+              <ion-label><ion-chip>{{qty}}</ion-chip></ion-label>
+      </ion-item>
+      <div class="outer-circle">
+        <div class="inner-circle">
+          <img title="confirmed" src="../../assets/like.png" />
+        </div>
+      </div>
+
+      <h2>Confirmation</h2>
+      <p>
+        Thank you for your order <br>
+        Your order {{orderId}} has been completed successfully
+      </p>
+      
+    </div>
+  </div>
+</ion-content>
+<ion-footer translucent="true" class="ion-no-border" mode="md">
+  <ion-toolbar color="translucent">
+    <ion-button expand="block" class="main-button" routerLink="/home" routerDirection="back">Continue Shopping</ion-button>
+  </ion-toolbar>
+</ion-footer>

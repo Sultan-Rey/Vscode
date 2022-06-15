@@ -1,0 +1,50 @@
+.icon{
+    width: 15px;
+    height: 23px;
+    border: none;
+    padding:2px;
+  }
+  .width{
+    font-size: 26px;
+  }
+  #code{
+    display: block;
+    margin: auto;
+    padding-bottom: 12%;
+    width: 35%;
+  }
+
+  .input{
+    font-size: 14px;
+    font-weight: bolder;
+    text-align: center
+  }
+
+  section {
+    margin-top: 1em;
+    margin-bottom: 2.5em;
+  }
+  section:not(.full-width),
+  .full-width > header {
+    padding: 0 10px;
+  }
+
+  .paragraph{
+    display: block;
+    padding: 20px;
+    margin: 5px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 18px;
+    text-align: justify;
+  }
+  .my-custom-class {
+    --background: #222;
+    --spinner-color: #fff;
+  
+    color: #fff;
+  }
+ .center{
+   margin-left: 25%;
+   margin-right: 25%;
+   padding: auto;
+ }

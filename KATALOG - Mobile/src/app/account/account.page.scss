@@ -1,0 +1,19 @@
+.padding-left{
+    padding-left: 5%
+}
+.field{
+    width: 150vw; margin: 0 auto;
+}
+.indicator{
+    position: absolute;
+     margin-top: -20px;
+     background:red; 
+     border-radius: 50%; 
+     padding: 5px;
+}
+ion-content{
+    --background: #f1f3f4;
+    div{
+        background: #ffffff ;
+    }
+}

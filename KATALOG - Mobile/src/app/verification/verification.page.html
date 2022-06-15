@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons style="margin-top:5%;" slot="start">
+    </ion-buttons>
+    <ion-title  class="width" mode=ios >
+      <ion-text size="LARGE" color="warning">
+        K</ion-text>
+        <ion-text color="danger"><ion-icon size="LARGE" name=cart></ion-icon></ion-text>
+        <ion-text >ta</ion-text><img title="app icon" class="icon" src="assets/icon/lipstick.png"/><ion-text>og</ion-text>
+      </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-img id="img" src="assets/images/welcome.gif"></ion-img>
+  
+    <p id="mail_link" class="paragraph">
+      A verification link was sent to your email adress: {{credential.mail}} please, verify it.
+    </p>
+   
+    
+   <ion-button class="center" (click)="verification()">Start Shopping now</ion-button>   
+ 
+</ion-content>
