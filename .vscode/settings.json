@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "pgOptions": {
+                "ssl": true
+            },
+            "previewLimit": 50,
+            "server": "data.splitgraph.com",
+            "port": 5432,
+            "askForPassword": true,
+            "driver": "PostgreSQL",
+            "name": "ddn",
+            "database": "ddn",
+            "username": "64ea1f11f6a84e0d8d8d92a08ecf76cc"
+        }
+    ]
+}
